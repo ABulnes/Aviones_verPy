@@ -7,6 +7,6 @@ class Avion:
         self._modelo = modelo
         self._estado = estado
         self._vuelos = []
-
+    
   
         
