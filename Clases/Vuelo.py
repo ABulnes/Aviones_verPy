@@ -19,14 +19,35 @@ class Vuelo:
         print('Ciudad de Destino: ', self._ciudad)
     
     def initBoletos(self,id):
-        archivo = open('Boletos.csv','r')
-        for linea in archivo:
-            partes = linea.split(',')
-            idVuelo = partes[0]
-            if(idVuelo == self._id):
-                nombre = partes[1]
-                asiento = partes[2]
-                b = Boleto(nombre,asiento)
-                self._pasajeros.append(b)
-                self.num_pasajeros += 1
-        archivo.close()        
+        try:
+            archivo = open('Boletos.csv','r')
+            for linea in archivo:
+                partes = linea.split(',')
+                idVuelo = partes[0]
+                if(idVuelo == self._id):
+                    nombre = partes[1]
+                    asiento = partes[2]
+                    b = Boleto(nombre,asiento)
+                    self._pasajeros.append(b)
+                    self.num_pasajeros += 1
+            archivo.close()
+        except:
+             print('Ocurrio un error al abrir el archivo')
+    
+    #Agrega el pasajero al archivo Boletos.csv
+    def addPasajero(self,nombre,asiento):
+        try:
+            archivo = open('Boletos.csv','a')
+            linea = ','.join([self._id,nombre,asiento])
+            archivo.write(linea)
+            archivo.close
+            return True
+        except:
+            print('Ocurrio un error al abrir el archivo')
+
+    #Reserva boletos en la lista
+    def reservar(self,nombre,asiento):
+        if(self.addPasajero(nombre,asiento)):
+            b = Boleto(nombre,asiento)
+            self._pasajeros.append(b)
+            self.num_pasajeros +=1

@@ -8,25 +8,28 @@ class Hangar:
         self.lista_avionesCarga = []
         self.cont_avionesCar = 0
         self.cont_avionesCom = 0
-        archivo = open('Aviones.csv','r')
-        for linea in archivo:
-            partes = linea.split(',')
-            #Obtiene los datos del avion
-            id = partes[0]
-            modelo = partes[1]
-            estado = partes[2]
-            tipo = partes[3]
-            capacidad = partes[4]
-            atributo = partes[5]
-            if tipo == 'Comercial':
-                avionComercial = AvionComercial(capacidad,atributo,id,modelo,estado)
-                self.lista_avionesComerciales.append(avionComercial)
-                self.cont_avionesCom += 1
-            elif tipo == 'Carga':
-                avionCarga = AvionCarga(capacidad,atributo,id,modelo,estado)
-                self.lista_avionesCarga.append(avionCarga)
-                self.cont_avionesCar += 1
-        archivo.close()
+        try:
+            archivo = open('Aviones.csv','r')
+            for linea in archivo:
+                partes = linea.split(',')
+                #Obtiene los datos del avion
+                id = partes[0]
+                modelo = partes[1]
+                estado = partes[2]
+                tipo = partes[3]
+                capacidad = partes[4]
+                atributo = partes[5]
+                if tipo == 'Comercial':
+                    avionComercial = AvionComercial(capacidad,atributo,id,modelo,estado)
+                    self.lista_avionesComerciales.append(avionComercial)
+                    self.cont_avionesCom += 1
+                elif tipo == 'Carga':
+                    avionCarga = AvionCarga(capacidad,atributo,id,modelo,estado)
+                    self.lista_avionesCarga.append(avionCarga)
+                    self.cont_avionesCar += 1
+            archivo.close()
+        except:
+             print('Ocurrio un error al abrir el archivo')
 
     #Imprime los aviones comerciales 
     def imprimirComerciales(self):
@@ -54,14 +57,17 @@ class Hangar:
     
     #Funcion que agrega el avion al archivo
     def inAvion(self,avion,tipo):
-        archivo = open('Aviones.csv','a')
-        if tipo == 1:
-            linea = ','.join([str(avion._id),avion._modelo,avion._estado,'Comercial',str(avion.capacidad),avion.clase])
-        else:
-            linea = ','.join([str(avion._id),avion._modelo,avion._estado,'Carga',str(avion.capacidad),str(avion.volumen)])
-        archivo.write(linea)
-        archivo.close()
-        return True
+        try:
+            archivo = open('Aviones.csv','a')
+            if tipo == 1:
+                linea = ','.join([str(avion._id),avion._modelo,avion._estado,'Comercial',str(avion.capacidad),avion.clase])
+            else:
+                linea = ','.join([str(avion._id),avion._modelo,avion._estado,'Carga',str(avion.capacidad),str(avion.volumen)])
+            archivo.write(linea)
+            archivo.close()
+            return True
+        except:
+             print('Ocurrio un error al abrir el archivo')
     
     #Funcion que obtiene el ultimo id
     def lastID(self):
@@ -131,6 +137,17 @@ class Hangar:
              if j._estado == 'B':
                 j.imprimir()
 
-
+    #Funcion que permite reservar un vuelo 
+    def reservarVuelo(self,idAvion,idVuelo,nombre,asiento):
+        for i in self.lista_avionesComerciales:
+            if(i._id == idAvion):
+                for vuelo in i._vuelos:
+                    if(vuelo._id == idVuelo and (vuelo.num_pasajeros < i.capacidad)):
+                        if(vuelo.reservar(nombre,asiento)):
+                            print('Se reservo el vuelo correctamente')
+                            return
+                        else:
+                            print('Ocurrio un error al guardar el vuelo')
+                            return
 
 
