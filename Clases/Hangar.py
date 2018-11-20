@@ -1,5 +1,6 @@
 from AvionCarga import AvionCarga
 from AvionComercial import AvionComercial
+from Archivo import Archivo
 
 class Hangar:
     #Constructor que inicializa el hangar
@@ -105,7 +106,13 @@ class Hangar:
    
     #Funcion que elimna el avion del archivo 
     def delAvion(self,id):
-        print('Deberia eliminar')
+        try:
+            op_ar = Archivo()
+            op_ar.eliminar('Aviones.csv',id)
+            return True
+        except:
+            print('Ocurrio un error al eliminar el avion')
+            return False
 
     #Funcion que permite eliminar los aviones de la lista
     def eliminarAvion(self,id):
