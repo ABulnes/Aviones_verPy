@@ -9,6 +9,7 @@ class Hangar:
         self.lista_avionesCarga = []
         self.cont_avionesCar = 0
         self.cont_avionesCom = 0
+        self.listaPrecios = []
         try:
             archivo = open('Aviones.csv','r')
             for linea in archivo:
@@ -29,6 +30,13 @@ class Hangar:
                     self.lista_avionesCarga.append(avionCarga)
                     self.cont_avionesCar += 1
             archivo.close()
+            
+            archivo2 = open('Precios.csv' , 'r')
+            for linea2 in archivo2:
+                partes = linea2.split(',')
+                listaPrecios.add(double(partes[1]))
+            archivo2.close()
+
         except:
              print('Ocurrio un error al abrir el archivo')
 
@@ -157,4 +165,49 @@ class Hangar:
                             print('Ocurrio un error al guardar el vuelo')
                             return
 
+    def cambiarEstado(self, id, estadonuevo):
+        for i in self.lista_avionesComerciales:
+            if(i._id == id):
+                i._estado = estadonuevo
+            print('El avion comercial con ID ' + i._id + ' cambio de estado correctamente.\n')
+            break
 
+        for j in self.lista_avionesCarga:
+            if(j._id == id):
+                j._estado = estadonuevo
+            print('El avion de carga con ID ' + j._id + ' cambio de estado correctamente.\n')
+            break
+
+    def verVuelos(self):
+        print('-------------------------------------\n')
+        print('Historial de Vuelos\n')    
+        print('-------------------------------------\n')
+
+        print('Vuelos Comerciales\n')
+        for i in self.lista_avionesComerciales:
+            print('Modelo: ' + i._modelo + '\n')
+            print('Vuelos: ' + i._vuelos + '\n')
+        
+        print('Vuelos de Carga\n')
+        for j in self.lista_avionesCarga:
+            print('Modelo: ' + i._modelo + '\n')
+            print('Vuelos: ' + i._vuelos + '\n')
+    
+    def generarGanancia(self):
+        ganancia_total = 0
+        
+        for i in self.lista_avionesComerciales:
+            for vuelo in i._vuelos:
+                if(i.clase == 'Ejecutiva'):
+                    x += vuelo.num_pasajeros * self.listaPrecios[0]
+                elif(i.clase == 'Economica'):
+                    x += vuelo.num_pasajeros * self.listaPrecios[1]
+
+        for j in self.lista_avionesCarga:
+            for vuelo in i._vuelos:
+                y += vuelo.capacidadactual * self.listaPrecios[2]
+        ganancia_total = x + y
+        print('La ganancia total de los vuelos es: ' + ganancia_total + '\n')
+    
+
+        

@@ -2,10 +2,11 @@ from Avion import Avion
 from Vuelo import Vuelo
 class AvionCarga(Avion):
 
-    def __init__(self,capacidad,volumen,id,modelo,estado):
+    def __init__(self,capacidad,volumen,id,modelo,estado, capacidadactual):
         Avion.__init__(self,id,modelo,estado)
         self.capacidad = capacidad
         self.volumen = volumen
+        self.capacidadactual = capacidadactual
         self.setVuelos()
     
     def imprimir(self):
@@ -15,6 +16,7 @@ class AvionCarga(Avion):
         print('Estado: ',self._estado)
         print('Volumen',self.volumen)
         print('Capacidad de carga: ',self.capacidad)
+        print('Capacidad actual: ',self.capacidadactual)
 
     def setVuelos(self):
         archivo = open('VuelosCarga.csv','r')
@@ -26,6 +28,7 @@ class AvionCarga(Avion):
                 hora_llegada = partes[2]
                 hora_salida = partes[3]
                 ciudad = partes[4]
-                v = Vuelo(idVuelo,hora_llegada,hora_salida,ciudad)
+                capacidadactual = partes[5]
+                v = Vuelo(idVuelo,hora_llegada,hora_salida, ciudad, capacidadactual)
                 self._vuelos.append(v)
         archivo.close()

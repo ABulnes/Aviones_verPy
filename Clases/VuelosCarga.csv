@@ -1,9 +1,9 @@
-5,1,10:00am,2:00pm,Madrid
-5,2,1:00pm,3:00pm,Barcelona
-5,3,4:00am,8:00am,Tegucigalpa
-6,4,12:00pm,5:00pm,San Pedro Sula
-6,5,3:00pm,7:00pm,La Ceiba
-6,6,6:00am,11:00am,Tegucigalpa
-7,7,10:00am,2:00pm,Madrid
-7,8,1:00pm,3:00pm,Barcelona
-7,9,4:00am,8:00am,San Jose
+5,1,10:00am,2:00pm,Madrid,56000
+5,2,1:00pm,3:00pm,Barcelona,95000
+5,3,4:00am,8:00am,Tegucigalpa,48000
+6,4,12:00pm,5:00pm,San Pedro Sula,24000
+6,5,3:00pm,7:00pm,La Ceiba,56000
+6,6,6:00am,11:00am,Tegucigalpa,79000
+7,7,10:00am,2:00pm,Madrid,67000
+7,8,1:00pm,3:00pm,Barcelona,23000
+7,9,4:00am,8:00am,San Jose,45000
