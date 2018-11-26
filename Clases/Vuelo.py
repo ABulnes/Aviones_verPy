@@ -1,5 +1,5 @@
 from Boleto import Boleto
-
+from Archivo import Archivo
 class Vuelo:
 
     def __init__(self,id,hora_llegada,hora_salida,ciudad):
@@ -51,3 +51,19 @@ class Vuelo:
             b = Boleto(nombre,asiento)
             self._pasajeros.append(b)
             self.num_pasajeros +=1
+
+    def delPasajero(self,nombre):
+        try:
+            op_ar = Archivo()
+            op_ar.eliminar('Boletos.csv',nombre)
+            return True
+        except:
+            print('Ocurrio un error al eliminar el pasajero')
+            return False
+
+    def eliminarPasajero(self,nombre):
+        if(self.delPasajero(nombre)):
+            if nombre in self._pasajeros:
+                self._pasajeros.remove(nombre)
+                self.num_pasajeros -= 1
+                return True
