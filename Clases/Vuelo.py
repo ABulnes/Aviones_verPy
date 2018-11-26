@@ -2,7 +2,7 @@ from Boleto import Boleto
 from Archivo import Archivo
 class Vuelo:
 
-    def __init__(self,id,hora_llegada,hora_salida,ciudad):
+    def __init__(self,id,hora_llegada,hora_salida,ciudad,capacidadactual = 0):
         self._id = id
         self._hora_llegada = hora_llegada
         self._hora_salida = hora_salida
@@ -10,6 +10,7 @@ class Vuelo:
         self.num_pasajeros = 0
         self._pasajeros = []
         self.initBoletos(self._id)
+        self.capacidadactual = capacidadactual
 
     def imprimir(self):
         print('--------------------')
@@ -17,6 +18,7 @@ class Vuelo:
         print('Hora de llegada: ',self._hora_llegada)
         print('Hora de salida: ',self._hora_salida)
         print('Ciudad de Destino: ', self._ciudad)
+        print('Capacidad Actual: ', self.capacidadactual)
     
     def initBoletos(self,id):
         try:
