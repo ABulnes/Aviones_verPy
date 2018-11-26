@@ -26,15 +26,14 @@ class Hangar:
                     self.lista_avionesComerciales.append(avionComercial)
                     self.cont_avionesCom += 1
                 elif tipo == 'Carga':
-                    avionCarga = AvionCarga(capacidad,atributo,id,modelo,estado)
+                    avionCarga = AvionCarga(capacidad,atributo,id,modelo,estado,0)
                     self.lista_avionesCarga.append(avionCarga)
                     self.cont_avionesCar += 1
             archivo.close()
-            
             archivo2 = open('Precios.csv' , 'r')
             for linea2 in archivo2:
                 partes = linea2.split(',')
-                listaPrecios.add(double(partes[1]))
+                self.listaPrecios.append(float(partes[2]))
             archivo2.close()
 
         except:
@@ -101,7 +100,7 @@ class Hangar:
     def agregarAvionCarga(self,modelo,estado,capacidad,volumen):
         
         if(self.cont_avionesCar < 10):
-            nuevoAvion = AvionCarga(capacidad,volumen,self.lastID(),modelo,estado)
+            nuevoAvion = AvionCarga(capacidad,volumen,self.lastID(),modelo,estado,0)
             if(self.inAvion(nuevoAvion,1)):
                 self.lista_avionesCarga.append(nuevoAvion)
                 self.cont_avionesCar +=1
@@ -165,6 +164,20 @@ class Hangar:
                             print('Ocurrio un error al guardar el vuelo')
                             return
 
+    #Funcion que cancela el vuelo
+    def cancelarVuelo(self,nombre):
+        for avion in self.lista_avionesComerciales:
+            for vuelos in avion._vuelos:
+                for pasajero in vuelos._pasajeros:
+                    if pasajero._nombre == nombre:
+                        if vuelos.eliminarPasajero(nombre):
+                            print('Se ha eliminado la reservacion del vuelo correctamente')
+                            return
+                        else:
+                            print('Ocurrio un error al eliminar el pasajero')
+                            return 
+
+    #Funcion que permite cambiar el estado del avion
     def cambiarEstado(self, id, estadonuevo):
         for i in self.lista_avionesComerciales:
             if(i._id == id):
@@ -177,7 +190,7 @@ class Hangar:
                 j._estado = estadonuevo
             print('El avion de carga con ID ' + j._id + ' cambio de estado correctamente.\n')
             break
-
+    #Funcion que permite ver los vuelos
     def verVuelos(self):
         print('-------------------------------------\n')
         print('Historial de Vuelos\n')    
@@ -192,10 +205,12 @@ class Hangar:
         for j in self.lista_avionesCarga:
             print('Modelo: ' + i._modelo + '\n')
             print('Vuelos: ' + i._vuelos + '\n')
-    
+
+    #Funcion que genera las ganancias
     def generarGanancia(self):
         ganancia_total = 0
-        
+        x = 0
+        y = 0
         for i in self.lista_avionesComerciales:
             for vuelo in i._vuelos:
                 if(i.clase == 'Ejecutiva'):
@@ -204,10 +219,10 @@ class Hangar:
                     x += vuelo.num_pasajeros * self.listaPrecios[1]
 
         for j in self.lista_avionesCarga:
-            for vuelo in i._vuelos:
+            for vuelo in j._vuelos:
                 y += vuelo.capacidadactual * self.listaPrecios[2]
         ganancia_total = x + y
-        print('La ganancia total de los vuelos es: ' + ganancia_total + '\n')
+        return ganancia_total
     
 
         
