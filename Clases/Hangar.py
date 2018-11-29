@@ -190,9 +190,6 @@ class Hangar:
                 j._estado = estadonuevo
             print('El avion de carga con ID ' + j._id + ' cambio de estado correctamente.\n')
             break
-
-    def cambiarEstado_file(self, id, estadonuevo)
-    def modificarPrecios()
     #Funcion que permite ver los vuelos
     def verVuelos(self):
         print('-------------------------------------\n')
