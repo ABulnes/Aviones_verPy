@@ -22,11 +22,11 @@ class Hangar:
                 capacidad = partes[4]
                 atributo = partes[5]
                 if tipo == 'Comercial':
-                    avionComercial = AvionComercial(capacidad,atributo,id,modelo,estado)
+                    avionComercial = AvionComercial(capacidad,atributo,id,modelo,estado,precio_eco,precio_ejec)
                     self.lista_avionesComerciales.append(avionComercial)
                     self.cont_avionesCom += 1
                 elif tipo == 'Carga':
-                    avionCarga = AvionCarga(capacidad,atributo,id,modelo,estado,0)
+                    avionCarga = AvionCarga(capacidad,atributo,id,modelo,estado,0,precio_carga)
                     self.lista_avionesCarga.append(avionCarga)
                     self.cont_avionesCar += 1
             archivo.close()
@@ -85,7 +85,7 @@ class Hangar:
     def agregarAvionComercial(self,modelo,estado,capacidad,clase):
         
         if(self.cont_avionesCom < 10):
-            nuevoAvion = AvionComercial(capacidad,clase,self.lastID(),modelo,estado)
+            nuevoAvion = AvionComercial(capacidad,clase,self.lastID(),modelo,estado, precio_eco, precio_ejec)
             if(self.inAvion(nuevoAvion,1)):
                 self.lista_avionesComerciales.append(nuevoAvion)
                 self.cont_avionesCom +=1
@@ -100,7 +100,7 @@ class Hangar:
     def agregarAvionCarga(self,modelo,estado,capacidad,volumen):
         
         if(self.cont_avionesCar < 10):
-            nuevoAvion = AvionCarga(capacidad,volumen,self.lastID(),modelo,estado,0)
+            nuevoAvion = AvionCarga(capacidad,volumen,self.lastID(),modelo,estado,0,precio_carga)
             if(self.inAvion(nuevoAvion,1)):
                 self.lista_avionesCarga.append(nuevoAvion)
                 self.cont_avionesCar +=1
@@ -190,6 +190,7 @@ class Hangar:
                 j._estado = estadonuevo
             print('El avion de carga con ID ' + j._id + ' cambio de estado correctamente.\n')
             break
+
     #Funcion que permite ver los vuelos
     def verVuelos(self):
         print('-------------------------------------\n')
