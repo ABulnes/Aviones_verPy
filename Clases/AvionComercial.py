@@ -2,11 +2,14 @@ from Avion import Avion
 from Vuelo import Vuelo
 class AvionComercial(Avion):
 
-    def __init__(self,capacidad,clase,id,modelo,estado):
+    def __init__(self,capacidad,clase,id,modelo,estado,precio_eco, precio_ejec):
         Avion.__init__(self,id,modelo,estado)
         self.capacidad = capacidad
         self.clase = clase
+        self.precio_eco = precio_eco
+        self.precio_ejec = precio_ejec
         self.setVuelos()
+        self.setPrecio()
     
     def imprimir(self):
         print('--------------------------')
@@ -29,3 +32,11 @@ class AvionComercial(Avion):
                 v = Vuelo(idVuelo,hora_llegada,hora_salida,ciudad)
                 self._vuelos.append(v)
         archivo.close()
+    
+    def setPrecio(self):
+        archivo2 = open('Precios.csv', 'a')
+        for linea in archivo2:
+            partes = linea.split(',')
+            precio_ejec = partes[2]
+            precio_eco = partes[5]
+        archivo2.close()
